@@ -1,3 +1,7 @@
+operator fun String.component1() = this[0].toString()
+operator fun String.component2() = this[1].toString()
+operator fun String.component3() = this[2].toString()
+
 enum class Play(val point: Int, val beats: Play? = null, val loses: Play? = null) {
   // Rock, Paper, Scissor
   A(0),
@@ -29,17 +33,17 @@ fun main() {
 
   fun part1(input: List<String>): Int {
     return input
-      .map { it.split(" ") }
       .sumOf {
-        game1(Play.valueOf(it.first()), Play.valueOf(it.last()))
+        val (first, _, last) = it
+        game1(Play.valueOf(first), Play.valueOf(last))
       }
   }
 
   fun part2(input: List<String>): Int {
     return input
-      .map { it.split(" ") }
       .sumOf {
-        game2(Play.valueOf(it.first()), Play.valueOf(it.last()))
+        val (first, _, last) = it
+        game2(Play.valueOf(first), Play.valueOf(last))
       }
   }
 
