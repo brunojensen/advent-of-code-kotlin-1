@@ -1,6 +1,3 @@
-operator fun String.component1() = this[0].toString()
-operator fun String.component2() = this[1].toString()
-operator fun String.component3() = this[2].toString()
 
 enum class Play(val point: Int, val beats: Play? = null, val loses: Play? = null) {
   // Rock, Paper, Scissor
@@ -30,7 +27,10 @@ fun game2(his: Play, mine: Play): Int {
 }
 
 fun main() {
-
+  operator fun String.component1() = this[0].toString()
+  operator fun String.component2() = this[1].toString()
+  operator fun String.component3() = this[2].toString()
+  
   fun part1(input: List<String>): Int {
     return input
       .sumOf {
