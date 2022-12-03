@@ -1,38 +1,30 @@
+private operator fun String.component1() = this.substring(0, this.length / 2)
+private operator fun String.component2() = this.substring(this.length / 2)
+
+private fun Char.priority(): Int = when (this) {
+  in 'a'..'z' -> (this - 'a') + 1
+  in 'A'..'Z' -> (this - 'A') + 27
+  else -> error("out of the range: $this")
+}
+
+private fun Pair<String, String>.findDuplicatedChar(): Char {
+  return (this.first.toSet() intersect this.second.toSet()).first()
+}
+
+private fun Triple<String, String, String>.findDuplicatedChar(): Char {
+  return ((this.first.toSet() intersect this.second.toSet())
+    intersect (this.third.toSet())).first()
+}
+
 fun main() {
-
-  operator fun String.component1() = this.substring(0, this.length / 2)
-  operator fun String.component2() = this.substring(this.length / 2)
-
-  operator fun List<String>.component1() = this[0]
-  operator fun List<String>.component2() = this[1]
-  operator fun List<String>.component3() = this[2]
-
-  fun Char.priority(): Int {
-    return when (this) {
-      lowercaseChar() -> (this - 'a') + 1
-      uppercaseChar() -> (this - 'A') + 27
-      else -> 0
-    }
-  }
-
-  fun Pair<String, String>.findDuplicated(): Char {
-    return this.first.toSet().intersect(this.second.toSet()).first()
-  }
-
-  fun Triple<String, String, String>.findDuplicated(): Char {
-    return this.first.toSet()
-      .intersect(this.second.toSet())
-      .intersect(this.third.toSet()).first()
-  }
 
   fun part1(input: List<String>): Int {
     return input
       .map {
         val (first, second) = it
-        Pair(first, second)
+        Pair(first, second).findDuplicatedChar()
       }.sumOf {
-        val duplicated = it.findDuplicated()
-        duplicated.priority()
+        it.priority()
       }
   }
 
@@ -40,10 +32,9 @@ fun main() {
     return input
       .chunked(3) {
         val (first, second, third) = it
-        Triple(first, second, third)
+        Triple(first, second, third).findDuplicatedChar()
       }.sumOf {
-        val duplicated = it.findDuplicated()
-        duplicated.priority()
+        it.priority()
       }
   }
 

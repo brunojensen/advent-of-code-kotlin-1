@@ -1,5 +1,7 @@
-
-enum class Play(val point: Int, val beats: Play? = null, val loses: Play? = null) {
+private operator fun String.component1() = this[0].toString()
+private operator fun String.component2() = this[1].toString()
+private operator fun String.component3() = this[2].toString()
+private enum class Play(val point: Int, val beats: Play? = null, val loses: Play? = null) {
   // Rock, Paper, Scissor
   A(0),
   B(0),
@@ -9,7 +11,7 @@ enum class Play(val point: Int, val beats: Play? = null, val loses: Play? = null
   Z(3, B, A);
 }
 
-fun game1(his: Play, mine: Play): Int {
+private fun game1(his: Play, mine: Play): Int {
   return when (his) {
     mine.beats -> mine.point + 6
     mine.loses -> mine.point + 0
@@ -17,7 +19,7 @@ fun game1(his: Play, mine: Play): Int {
   }
 }
 
-fun game2(his: Play, mine: Play): Int {
+private fun game2(his: Play, mine: Play): Int {
   return when (mine) {
     Play.X -> Play.values().filter { null != it.loses }.first { it.loses == his }.point + 0
     Play.Z -> Play.values().filter { null != it.beats }.first { it.beats == his }.point + 6
@@ -27,10 +29,6 @@ fun game2(his: Play, mine: Play): Int {
 }
 
 fun main() {
-  operator fun String.component1() = this[0].toString()
-  operator fun String.component2() = this[1].toString()
-  operator fun String.component3() = this[2].toString()
-  
   fun part1(input: List<String>): Int {
     return input
       .sumOf {

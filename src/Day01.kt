@@ -1,6 +1,6 @@
 import java.util.PriorityQueue
 
-fun PriorityQueue<Int>.offerAndPollIfMaxSize(input: Int, maxSizw: Int) {
+private fun PriorityQueue<Int>.offerAndPollIfMaxSize(input: Int, maxSizw: Int) {
   this.offer(input)
   if (this.size > maxSizw) {
     this.poll()
