@@ -5,22 +5,24 @@ private fun createDirectoryMap(input: List<String>): Map<String, Int> {
   return buildMap {
     val directory = mutableListOf<String>()
     input.forEach {
-      if (it.startsWith("$ cd")) {
-        when (it.substring(4).trim()) {
-          ".." -> {
-            directory.removeLast()
-          }
-
+      val splittedInput = it.split(" ")
+      when (splittedInput.first()) {
+        "$" -> when (splittedInput.last()) {
+          ".." -> directory.removeLast()
+          "ls" -> {}
           else -> {
             directory.add(it.substringAfterLast(" "))
             this[directory.joinToString("/")] = 0
           }
         }
-      } else if (it.first().isDigit()) {
-        val tmp = directory.toMutableList()
-        while (tmp.isNotEmpty()) {
-          this[tmp.joinToString("/")] = this[tmp.joinToString("/")]!! + it.substringBefore(" ").toInt()
-          tmp.removeLast()
+
+        else -> if (it.first().isDigit()) {
+          val tmp = directory.toMutableList()
+          while (tmp.isNotEmpty()) {
+            val directoryToString = tmp.joinToString("/")
+            this[directoryToString] = this[directoryToString]!! + it.substringBefore(" ").toInt()
+            tmp.removeLast()
+          }
         }
       }
     }
