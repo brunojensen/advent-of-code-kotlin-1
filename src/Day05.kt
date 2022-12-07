@@ -1,4 +1,4 @@
-data class Command(val amount: Int, val from: Int, val to: Int) {
+private data class Move(val amount: Int, val from: Int, val to: Int) {
 
   fun execute1(stacks: List<MutableList<Char>>) {
     repeat(amount) { stacks[to].add(stacks[from].removeLast()) }
@@ -20,12 +20,12 @@ private fun parseStacks(input: List<String>): List<MutableList<Char>> {
   }
 }
 
-private fun parseCommands(input: List<String>): List<Command> {
+private fun parseMoves(input: List<String>): List<Move> {
   return input
     .dropWhile { !it.startsWith("move") }
     .map { row ->
       row.split(" ").let { parts ->
-        Command(parts[1].toInt(), parts[3].toInt() - 1, parts[5].toInt() - 1)
+        Move(parts[1].toInt(), parts[3].toInt() - 1, parts[5].toInt() - 1)
       }
     }
 
@@ -45,7 +45,7 @@ fun main() {
   fun part1(input: List<String>): String {
     val stacks = parseStacks(input)
 
-    parseCommands(input)
+    parseMoves(input)
       .forEach {
         it.execute1(stacks)
       }
@@ -56,7 +56,7 @@ fun main() {
   fun part2(input: List<String>): String {
     val stacks = parseStacks(input)
 
-    parseCommands(input)
+    parseMoves(input)
       .forEach {
         it.execute2(stacks)
       }
