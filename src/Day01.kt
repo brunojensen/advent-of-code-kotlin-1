@@ -1,4 +1,5 @@
 import java.util.PriorityQueue
+import kotlin.math.max
 
 private fun PriorityQueue<Int>.offerAndPollIfMaxSize(input: Int, maxSizw: Int) {
   this.offer(input)
@@ -18,7 +19,7 @@ fun main() {
         continue
       }
       sum += i.toInt()
-      max = Math.max(sum, max)
+      max = max(sum, max)
     }
     return max
   }
